@@ -102,11 +102,17 @@ class ZyxelSwitchCoordinator(DataUpdateCoordinator[SwitchData]):
     @callback
     def _async_update_device(self, info: SwitchInfo) -> None:
         registry = dr.async_get(self.hass)
-        device = registry.async_get_device(identifiers={(DOMAIN, self.device_identifier)})
-        if device is not None:
-            registry.async_update_device(
-                device.id, sw_version=info.firmware, model=info.model, serial_number=info.serial
-            )
+        identifier = (DOMAIN, self.device_identifier)
+        # Looked up within the config entry: async_get_device(identifiers=...) is
+        # deprecated since 2026.9, and its replacement does not exist before that.
+        for device in dr.async_entries_for_config_entry(registry, self.config_entry.entry_id):
+            if identifier in device.identifiers:
+                registry.async_update_device(
+                    device.id,
+                    sw_version=info.firmware,
+                    model=info.model,
+                    serial_number=info.serial,
+                )
 
     @property
     def device_identifier(self) -> str:

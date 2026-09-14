@@ -23,6 +23,13 @@ def _entry(port: int) -> MockConfigEntry:
     )
 
 
+def _device(hass: HomeAssistant, entry: MockConfigEntry) -> dr.DeviceEntry:
+    devices = dr.async_entries_for_config_entry(dr.async_get(hass), entry.entry_id)
+    assert len(devices) == 1
+    assert (DOMAIN, "S000TEST0001") in devices[0].identifiers
+    return devices[0]
+
+
 def _entity_id(hass: HomeAssistant, domain: str, key: str) -> str:
     entity_id = er.async_get(hass).async_get_entity_id(domain, DOMAIN, f"S000TEST0001_{key}")
     assert entity_id, key
@@ -37,8 +44,7 @@ async def test_setup_creates_device_and_entities(hass: HomeAssistant, agent) -> 
     await hass.async_block_till_done()
     assert entry.state is ConfigEntryState.LOADED
 
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, "S000TEST0001")})
-    assert device is not None
+    device = _device(hass, entry)
     assert (device.manufacturer, device.model, device.sw_version) == (
         "Zyxel",
         "GS1900-8",
@@ -102,7 +108,7 @@ async def test_reboot_refreshes_firmware(hass: HomeAssistant, agent) -> None:  #
     fake.reload()
     await entry.runtime_data.async_refresh()
     await hass.async_block_till_done()
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, "S000TEST0001")})
+    device = _device(hass, entry)
     assert device.sw_version == "V2.91(AAHL.1)"
 
 
