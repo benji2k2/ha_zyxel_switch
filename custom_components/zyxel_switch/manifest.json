@@ -1,0 +1,12 @@
+{
+  "domain": "zyxel_switch",
+  "name": "Zyxel Switch",
+  "codeowners": ["@benji2k2"],
+  "config_flow": true,
+  "documentation": "https://github.com/benji2k2/ha_zyxel_switch",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/benji2k2/ha_zyxel_switch/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

@@ -1,0 +1,92 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Zyxel Switch",
+        "description": "Adresse des Switches und SNMP-Community eingeben. Am Switch muss SNMP v2c aktiviert sein, Lesezugriff genügt.",
+        "data": {
+          "host": "Host",
+          "community": "SNMP-Community",
+          "port": "SNMP-Port"
+        },
+        "data_description": {
+          "host": "IP-Adresse oder Hostname des Switches.",
+          "community": "Die am Switch eingerichtete Lese-Community (nicht das Anmeldepasswort).",
+          "port": "In der Regel 161."
+        }
+      },
+      "reconfigure": {
+        "title": "Verbindung ändern",
+        "description": "Adresse oder SNMP-Community des Switches ändern.",
+        "data": {
+          "host": "Host",
+          "community": "SNMP-Community",
+          "port": "SNMP-Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Der Switch antwortet nicht. Adresse, aktiviertes SNMP v2c und Community prüfen – und ob der Switch SNMP nur von bestimmten Rechnern annimmt.",
+      "invalid_response": "Der Switch hat geantwortet, aber nicht mit den erwarteten SNMP-Daten.",
+      "invalid_host": "Der Hostname konnte nicht aufgelöst werden.",
+      "unknown": "Unerwarteter Fehler, siehe Protokoll."
+    },
+    "abort": {
+      "already_configured": "Dieser Switch ist bereits eingerichtet.",
+      "reconfigure_successful": "Die Verbindung wurde geändert.",
+      "wrong_switch": "Die Adresse zeigt jetzt auf einen anderen Switch (Seriennummer passt nicht)."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Abfrage",
+        "data": {
+          "scan_interval": "Abfrageintervall"
+        },
+        "data_description": {
+          "scan_interval": "Wie oft alle Ports gelesen werden. Der Durchsatz wird über dieses Intervall gemittelt."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "link": {
+        "name": "{port} Verbindung"
+      }
+    },
+    "sensor": {
+      "speed": {
+        "name": "{port} Geschwindigkeit"
+      },
+      "rx": {
+        "name": "{port} Empfang"
+      },
+      "tx": {
+        "name": "{port} Senden"
+      },
+      "in_errors": {
+        "name": "{port} Empfangsfehler"
+      },
+      "out_errors": {
+        "name": "{port} Sendefehler"
+      },
+      "mac_count": {
+        "name": "{port} MAC-Adressen"
+      },
+      "neighbor": {
+        "name": "{port} LLDP-Nachbar"
+      },
+      "ports_up": {
+        "name": "Verbundene Ports"
+      },
+      "switch_mac_count": {
+        "name": "MAC-Adressen"
+      },
+      "boot_time": {
+        "name": "Letzter Neustart"
+      }
+    }
+  }
+}

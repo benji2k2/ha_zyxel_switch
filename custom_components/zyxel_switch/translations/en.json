@@ -1,0 +1,92 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Zyxel Switch",
+        "description": "Enter the address of the switch and its SNMP community. SNMP v2c must be enabled on the switch, read access is enough.",
+        "data": {
+          "host": "Host",
+          "community": "SNMP community",
+          "port": "SNMP port"
+        },
+        "data_description": {
+          "host": "IP address or host name of the switch.",
+          "community": "The read-only community configured on the switch (not your login password).",
+          "port": "Usually 161."
+        }
+      },
+      "reconfigure": {
+        "title": "Change connection",
+        "description": "Change the address or SNMP community of the switch.",
+        "data": {
+          "host": "Host",
+          "community": "SNMP community",
+          "port": "SNMP port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "The switch did not answer. Check the address, that SNMP v2c is enabled, the community, and whether the switch only accepts SNMP from certain hosts.",
+      "invalid_response": "The switch answered, but not with the expected SNMP data.",
+      "invalid_host": "The host name could not be resolved.",
+      "unknown": "Unexpected error, see the log."
+    },
+    "abort": {
+      "already_configured": "This switch is already set up.",
+      "reconfigure_successful": "The connection was updated.",
+      "wrong_switch": "The address now points to a different switch (serial number does not match)."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Polling",
+        "data": {
+          "scan_interval": "Polling interval"
+        },
+        "data_description": {
+          "scan_interval": "How often all ports are read. Traffic is averaged over this interval."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "link": {
+        "name": "{port} link"
+      }
+    },
+    "sensor": {
+      "speed": {
+        "name": "{port} speed"
+      },
+      "rx": {
+        "name": "{port} receive"
+      },
+      "tx": {
+        "name": "{port} transmit"
+      },
+      "in_errors": {
+        "name": "{port} receive errors"
+      },
+      "out_errors": {
+        "name": "{port} transmit errors"
+      },
+      "mac_count": {
+        "name": "{port} MAC addresses"
+      },
+      "neighbor": {
+        "name": "{port} LLDP neighbor"
+      },
+      "ports_up": {
+        "name": "Ports connected"
+      },
+      "switch_mac_count": {
+        "name": "MAC addresses"
+      },
+      "boot_time": {
+        "name": "Last restart"
+      }
+    }
+  }
+}
