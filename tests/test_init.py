@@ -57,6 +57,8 @@ async def test_setup_creates_device_and_entities(hass: HomeAssistant, agent) -> 
     assert link.attributes["friendly_name"] == "TestSwitch Port 1 (Router) link"
     assert hass.states.get(_entity_id(hass, "binary_sensor", "if2_link")).state == STATE_OFF
     assert hass.states.get(_entity_id(hass, "sensor", "if1_speed")).state == "1000"
+    speed = er.async_get(hass).async_get(_entity_id(hass, "sensor", "if1_speed"))
+    assert speed.options["sensor"]["suggested_display_precision"] == 0
     # No previous sample yet, so no rate.
     assert hass.states.get(_entity_id(hass, "sensor", "if1_rx")).state == STATE_UNKNOWN
     assert hass.states.get(_entity_id(hass, "sensor", "ports_up")).state == "3"

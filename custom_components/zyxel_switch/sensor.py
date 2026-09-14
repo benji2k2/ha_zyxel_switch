@@ -49,6 +49,9 @@ PORT_SENSORS: tuple[PortSensorDescription, ...] = (
         device_class=SensorDeviceClass.DATA_RATE,
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
+        # A negotiated link speed is a whole number; without this the data-rate
+        # device class shows 1000.00.
+        suggested_display_precision=0,
         value_fn=_port_attr("speed_mbps"),
     ),
     PortSensorDescription(
